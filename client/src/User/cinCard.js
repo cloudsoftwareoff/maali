@@ -70,7 +70,7 @@ const CinCard = () => {
     event.preventDefault();
   
     try {
-      const response = await fetch('https://maali.onrender.com/login', {
+      const response = await fetch('http://127.0.0.1:3030/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

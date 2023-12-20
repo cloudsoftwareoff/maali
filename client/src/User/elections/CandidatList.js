@@ -14,7 +14,7 @@ const CandidateList = () => {
       const fetchCandidates = async () => {
         console.log(card_number);
         try {
-            const response = await fetch('https://maali.onrender.com/api/get/candidat', {
+            const response = await fetch('http://127.0.0.1:3030/api/get/candidat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ const CandidateList = () => {
     const handleVote = async () => {
         if (selectedCandidate) {
           try {
-            const response = await fetch('https://maali.onrender.com/vote', {
+            const response = await fetch('http://127.0.0.1:3030/vote', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

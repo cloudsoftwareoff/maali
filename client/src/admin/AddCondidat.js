@@ -30,7 +30,7 @@ const CandidateForm = () => {
 
     try {
       // Send the candidateData to the server
-      const response = await axios.post('https://maali.onrender.com/api/add/candidat',
+      const response = await axios.post('http://127.0.0.1:3030/api/add/candidat',
    candidateData,
    {
       headers: {
