@@ -27,3 +27,10 @@
  ### Start Client
  `npm start`
 
+🛡 Intellectual Property Rights
+1. The Developer shall retain all rights, title, and interest in any pre-existing intellectual
+property incorporated into the Website, including but not limited to software,
+graphics, and content.
+2. Upon full payment of the Total Fee, the Developer grants the Client a non-exclusive,
+perpetual, worldwide license to use, display, and modify the Website and its
+content
