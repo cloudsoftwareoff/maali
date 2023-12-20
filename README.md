@@ -1,6 +1,6 @@
- # Clone repo 
+ ### Clone repo 
  `git clone https://github.com/cloudsoftwareoff/maali`
- # cd to the folder
+ ### cd to the folder
  `cd maali`
 
  # Server Setup
