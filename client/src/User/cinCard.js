@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+//import './cin.css';
 
 const CinCard = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const CinCard = () => {
   
     document.getElementById('card-holder').addEventListener('keyup', function () {
       var t = this;
-      document.querySelector('.credit-card-box .card-holder div').innerHTML = t.value;
+      document.querySelector('.cin-card .card-holder div').innerHTML = t.value;
       setFormData((prevFormData) => {
         const updatedFormData = { ...prevFormData, code: t.value };
         
@@ -27,11 +27,11 @@ const CinCard = () => {
   
 
     document.getElementById('fingerprint').addEventListener('focus', function () {
-      document.querySelector('.credit-card-box').classList.add('hover');
+      document.querySelector('.cin-card').classList.add('hover');
     });
 
     document.getElementById('fingerprint').addEventListener('blur', function () {
-      document.querySelector('.credit-card-box').classList.remove('hover');
+      document.querySelector('.cin-card').classList.remove('hover');
     });
 
     document.getElementById('fingerprint').addEventListener('keyup', function () {
@@ -147,16 +147,17 @@ const CinCard = () => {
   };
   
   return (
-   <div> <div className="checkout">
+   <div> 
+   <div className="cinCard">
       <div>
         <svg viewBox="0 0 500 150" preserveAspectRatio="none" style={{ borderRadius: '15px', position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' }}>
           <path d="M208.09,0.00 C384.68,-161.89 -117.80,438.09 200.79,150.00 L-32.18,178.09 L0.00,0.00 Z" style={{ stroke: 'none', fill: '#EE23' }}></path>
         </svg>
       </div>
 
-      <div className="credit-card-box">
+      <div className="cin-card">
         <div className="flip">
-          <div className="front">
+          <div className="front" >
           <div className="chip" style={{ backgroundImage: "url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Tunisia.svg/2560px-Flag_of_Tunisia.svg.png')" }}></div>
             
             
@@ -217,6 +218,8 @@ const CinCard = () => {
 
       
     </div>
+
+    
     <form className="form" autoComplete="off" noValidate onSubmit={handleSubmit}>
       <fieldset>
           <label htmlFor="card-number">Card Number</label>

@@ -30,7 +30,7 @@
   }
   
   .candidate-card button {
-    background-color: #4caf50;
+    background-color: #77216a;
     color: white;
     padding: 8px 16px;
     border: none;
@@ -39,6 +39,6 @@
   }
   
   .candidate-card button:hover {
-    background-color: #45a049;
+    background-color: #9e35ae;
   }
   

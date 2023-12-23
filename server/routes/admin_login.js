@@ -2,8 +2,6 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const AdminUser = require('../models/adminModel');
-const cookie = require('cookie');
-
 const router = express.Router();
 const fixedSalt = process.env.SALT;
 
@@ -49,3 +47,10 @@ router.post('/', async (req, res) => {
 });
 
 module.exports = router;
+
+// // Create a new admin user
+// const newAdmin = new AdminUser({
+//   cin: cin,
+//   password: password,
+//   // Add other fields as needed
+// });

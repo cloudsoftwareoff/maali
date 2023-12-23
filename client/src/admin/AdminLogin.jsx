@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AdminLogin.css'; // Make sure to import your CSS file
+import './css/AdminLogin.css'; // Make sure to import your CSS file
 import { useNavigate } from 'react-router-dom';
 
 
@@ -21,7 +21,7 @@ const AdminLogin = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://127.0.0.1:3030/api/admin/login', {
+      const response = await fetch('https://maali.onrender.com/api/admin/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -2,8 +2,9 @@
 
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ElectionPage from './elections/election';
-import { useUser } from '../user'; // Adjust the path based on your file structure
+import ElectionPage from './elections/ElectionPage';
+import { useUser } from '../user'; 
+import Navbar from '../Widgets/NavBar';
 
 const Homepage = () => {
   const navigate = useNavigate();
@@ -25,12 +26,22 @@ const Homepage = () => {
   return (
     <div>
       
-<nav>
-<b>Hello {sessionStorage.getItem('user_name')}</b>
+     <Navbar name={sessionStorage.getItem('user_name')}/>
+{/* <nav>
+<b>Hello {}</b>
       <button onClick={handleLogout}>Logout</button>
 
-</nav>
+</nav> */}
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<main>
+
       <ElectionPage/>
+</main>
 
     </div>
   );

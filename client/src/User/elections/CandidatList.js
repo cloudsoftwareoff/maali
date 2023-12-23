@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CandidateList.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const CandidateList = () => {
-  const navigate = useNavigate();
+ //const navigate = useNavigate();
     const [candidates, setCandidates] = useState([]);
     const [selectedCandidate, setSelectedCandidate] = useState(null);
     const [voted, setvote] = useState("Candidate List");
@@ -14,7 +15,7 @@ const CandidateList = () => {
       const fetchCandidates = async () => {
         console.log(card_number);
         try {
-            const response = await fetch('http://127.0.0.1:3030/api/get/candidat', {
+            const response = await fetch('https://maali.onrender.com/api/get/candidat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -25,8 +26,7 @@ const CandidateList = () => {
           if (response.ok) {
             const data = await response.json();
             setCandidates(data);
-            navigate('/', { replace: true });
-            window.location.reload();
+        
           } else {
             if(response.status === 403){
 
@@ -45,7 +45,7 @@ const CandidateList = () => {
     const handleVote = async () => {
         if (selectedCandidate) {
           try {
-            const response = await fetch('http://127.0.0.1:3030/vote', {
+            const response = await fetch('https://maali.onrender.com/vote', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -74,30 +74,44 @@ const CandidateList = () => {
     };
   
     return (
-      <div>
-        <h3>{voted}</h3>
-        <ul>
+      <main>
+      <div className="container mt-4" style={{ background: '#f8f9fa'  }}>
+        <h3 className="text-center mb-4">{voted}</h3>
+        <div>
           {candidates.map((candidate, index) => (
-            <li key={index}>
-              <b>{candidate.position} <img src={candidate.imageUrl} alt={` of ${candidate.name}`} style={{ width: '70px', height: '70px' }} />
-                <strong>{candidate.name}</strong></b>
-              <input
-                type="checkbox"
-                onChange={() => handleCheckboxChange(candidate.cin)}
-                checked={selectedCandidate === candidate.cin}
+            <div key={index} className="card mb-4 mx-auto" style={{ maxWidth: '500px'  }}>
+              <img
+                src={candidate.imageUrl}
+                alt={candidate.name}
+                className="card-img-top"
+                style={{ height: '200px', objectFit: 'cover' }}
               />
-            </li>
+              <div className="card-body">
+                <h5 className="card-title">{candidate.position}</h5>
+                <p className="card-text">{candidate.name}</p>
+                <div className="form-check "> {}
+                <input
+                    className="form-check-input mr"
+                    type="checkbox"
+                    onChange={() => handleCheckboxChange(candidate.cin)}
+                    checked={selectedCandidate === candidate.cin}
+                    
+                    style={{ transform: 'scale(3)' , marginLeft:'350px' }}
+                  />
+                  
+                  
+                </div>
+              </div>
+            </div>
           ))}
-        </ul>
-        <button onClick={handleVote} disabled={!selectedCandidate}
-        style={{
-            background: voted === 'deja votee' ? 'red' : 'green',
-          }}
-        >
-          Vote
-        </button>
-      </div>
+        </div>
+        <button
+          className={`btn btn-lg btn-block mt-4 ${voted === 'deja votee' ? 'btn-danger' : 'btn-success'}`}
+          onClick={handleVote}
+          disabled={!selectedCandidate}>Vote</button>
+      </div></main>
     );
+    
   };
   
   export default CandidateList;

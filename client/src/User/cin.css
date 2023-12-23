@@ -5,16 +5,7 @@
 }
 
 html,
-body {
-  min-height: 100%;
-  font-family: "Open Sans", sans-serif;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  background: linear-gradient(50deg, #314755, #26A0DA);
-}
+
 
 .btn {
   display: block;
@@ -172,20 +163,20 @@ body {
   box-shadow: 0 10px 40px rgb(0 0 0 / 10%);
 }
 
-.credit-card-box {
+.cin-card {
   perspective: 1000;
   width: 370px;
   height: 280px;
   transform: translateX(-40%);
 }
 
-.credit-card-box:hover .flip,
-.credit-card-box.hover .flip {
+.cin-card:hover .flip,
+.cin-card.hover .flip {
   transform: rotateY(180deg);
 }
 
-.credit-card-box .front,
-.credit-card-box .back {
+.cin-card .front,
+.cin-card .back {
   width: 400px;
   height: 250px;
   border-radius: 15px;
@@ -200,8 +191,8 @@ body {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
 }
 
-.credit-card-box .front::before,
-.credit-card-box .back::before {
+.cin-card .front::before,
+.cin-card .back::before {
   content: "";
   position: absolute;
   width: 100%;
@@ -213,63 +204,63 @@ body {
   opacity: 0.05;
 }
 
-.credit-card-box .flip {
+.cin-card .flip {
   transition: 0.6s;
   transform-style: preserve-3d;
   position: relative;
 }
 
-.credit-card-box .logo {
+.cin-card .logo {
   position: absolute;
   top: 9px;
   right: 20px;
   width: 60px;
 }
 
-.credit-card-box .logo svg {
+.cin-card .logo svg {
   width: 100%;
   height: auto;
   fill: #fff;
 }
 
-.credit-card-box .front {
+.cin-card .front {
   z-index: 2;
   transform: rotateY(0deg);
 }
 
-.credit-card-box .back {
+.cin-card .back {
   transform: rotateY(180deg);
 }
 
-.credit-card-box .back .logo {
+.cin-card .back .logo {
   top: 185px;
 }
 
-.credit-card-box .chip {
+.cin-card .chip {
   position: absolute;
   width: 60px;
   height: 45px;
   top: 20px;
   left: 20px;
-  background: linear-gradient(135deg, #eac34d 0%, #eac34d 44%, #eac34d 100%);
+  
   border-radius: 8px;
 }
 
-.credit-card-box .chip::before {
-  content: "";
+.cin-card .chip::before {
+ 
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   margin: auto;
-  border: 4px solid rgba(128, 128, 128, 0.1);
+  
   width: 80%;
   height: 70%;
   border-radius: 5px;
 }
 
-.credit-card-box .strip {
+.cin-card .strip {
   background: linear-gradient(135deg, #404040, #1a1a1a);
   position: absolute;
   width: 100%;
@@ -278,7 +269,7 @@ body {
   left: 0;
 }
 
-.credit-card-box .number {
+.cin-card .number {
   position: absolute;
   margin: 0 auto;
   top: 103px;
@@ -286,7 +277,7 @@ body {
   font-size: 36px;
 }
 
-.credit-card-box label {
+.cin-card label {
   font-size: 10px;
   letter-spacing: 1px;
   text-shadow: none;
@@ -296,8 +287,8 @@ body {
   margin-bottom: 3px;
 }
 
-.credit-card-box .card-holder,
-.credit-card-box .card-date {
+.cin-card .card-holder,
+.cin-card .card-date {
   position: absolute;
   margin: 0 auto;
   top: 180px;
@@ -306,13 +297,13 @@ body {
   text-transform: capitalize;
 }
 
-.credit-card-box .card-date {
+.cin-card .card-date {
   text-align: right;
   left: auto;
   right: 20px;
 }
 
-.credit-card-box .cvv {
+.cin-card .cvv {
   height: 36px;
   background: #fff;
   width: 91%;
@@ -327,7 +318,7 @@ body {
   padding: 10px;
 }
 
-.credit-card-box .cvv label {
+.cin-card .cvv label {
   margin: -25px 0 8px;
   color: #fff;
 }
@@ -348,19 +339,19 @@ body {
     width: 95%;
     padding: 20px 15px 20px;
   }
-  .credit-card-box {
+  .cin-card {
     width: 350%;
     transform: unset;
     margin: 0 auto;
   }
-  .credit-card-box .front,
-  .credit-card-box .back {
+  .cin-card .front,
+  .cin-card .back {
     width: 100%;
   }
   .checkout svg {
     display: none;
   }
-  .credit-card-box .number {
+  .cin-card .number {
     font-size: 30px;
   }
   .form fieldset input.input-cart-number,

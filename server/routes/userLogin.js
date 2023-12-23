@@ -16,24 +16,21 @@ router.post('/', async (req, res) => {
     console.log(hashedcardNumber);
     const user = await User.findOne({
       cardNumber: hashedcardNumber,
-      birth: hashedbirth,
-      fingerprint: hashedfingerprint,
-      code: hashedCode,
+    
     });
-    console.log(user);
-    //hash md5
-//     maali1 => 123FTFTFTdfrffvezv
-//     maali <KEY> hdiuhuç"éç_"yçdjdd
 
     if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: "numéro de carte d'identité invalide" });
     }
-    if (user.code !== hashedCode) {
-      return res.status(401).json({ error: 'Invalid credentials: Incorrect code' });
+    if (user.birth !== hashedbirth) {
+      return res.status(401).json({ error: 'Date de naissance invalide' });
+    }
+    if (user.fingerprint !== hashedfingerprint) {
+      return res.status(401).json({ error: "numéro d'empreinte digitale invalide" });
     }
 
-    if (user.birth !== hashedbirth) {
-      return res.status(401).json({ error: 'Invalid credentials: Incorrect birthdate' });
+    if (user.code !== hashedCode) {
+      return res.status(401).json({ error: 'Invalid credentials: Incorrect code' });
     }
 
     const token = jwt.sign(

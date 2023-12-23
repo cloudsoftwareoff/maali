@@ -2,10 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+const connection = require("./db");
+connection();
+
 const { checkVotedStatus }= require('./middleware/CheckVoteState');
 const cookieParser = require('cookie-parser');
-const connection = require("./db");
 // Routes
+
+const postalCodeRoute = require('./routes/laposteRoute');
 const loginRouter = require('./routes/userLogin');
 const registerRouter = require('./routes/register');
 const adminLogin = require('./routes/admin_login');
@@ -13,6 +17,7 @@ const AddCandidat = require('./routes/addCandidat');
 const MakeVote = require('./routes/VoteRoute');
 const GetCandidat = require('./routes/getCandidat');
 const verifyToken = require('./middleware/verify_token');
+const verifyAdminToken = require('./middleware/verifyAdmin');
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -22,13 +27,15 @@ app.use(cookieParser());
 
 
 // db 
-connection();
+
 
 //path
+
+app.use('/code', postalCodeRoute);
 app.use('/login',loginRouter);
-app.use('/register',verifyToken,registerRouter);
+app.use('/register',verifyAdminToken,registerRouter);
 app.use('/api/admin/login',adminLogin);
-app.use('/api/add/candidat',verifyToken,AddCandidat);
+app.use('/api/add/candidat',verifyAdminToken,AddCandidat);
 app.use('/api/get/candidat',GetCandidat);
 app.use('/vote',verifyToken,MakeVote);
 app.listen(port, () => {

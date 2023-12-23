@@ -6,8 +6,7 @@ const User = require ('../models/userModel');
 // Endpoint to fetch all candidates
 router.post('/', async (req, res) => {
     const { card_number} = req.body;
-    console.log(card_number);
-    console.log("req.body:", req.body);
+    
     const user = await User.findByCardNumber(card_number);
   
       
@@ -16,8 +15,10 @@ router.post('/', async (req, res) => {
       }
   try {
     const candidates = await Candidate.find();
+    console.log(candidates);
     const decryptedCandidates = Candidate.decryptData(candidates);
-    res.json(decryptedCandidates)
+    res.json(candidates)
+
    
   } catch (error) {
     console.error('Error fetching candidates:', error);

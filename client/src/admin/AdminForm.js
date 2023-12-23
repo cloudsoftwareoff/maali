@@ -1,9 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import './AdminForm.css';  
+import './css/AdminForm.css';  
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 const token = sessionStorage.getItem('admin_token');
 const AdminForm = () => {
   const navigate = useNavigate();
+  const [errorMessage, seterrorMessage] = useState('');
+  const [postalCodeData, setPostalCodeData] = useState([]); 
+  const [selectedPostalCode, setSelectedPostalCode] = useState('');
+  
+  
+  const [formData, setFormData] = useState({
+    user_number: '',
+    user_birthdate: '',
+    user_fingerprint: '',
+    user_email: '',
+    user_name: '',
+    location:'',
+    postalcode:''
+});
+
+  const fetchData = async (code) => {
+    if (code.length >= 3) {
+      try {
+        
+        const response = await axios.get(`https://maali.onrender.com/code/${code}`);
+        const data = response.data;
+        setPostalCodeData(data);
+  
+        
+      } catch (error) {
+        console.error('Error fetching postal code data:', error);
+      }
+    }
+  };
   useEffect(() => {
 
     const hasSession = sessionStorage.getItem('admin_token') !== null;
@@ -12,14 +42,9 @@ const AdminForm = () => {
     if (!hasSession) {
       navigate('/login');
     }
-}, []);
-    const [formData, setFormData] = useState({
-        user_number: '',
-        user_birthdate: '',
-        user_fingerprint: '',
-        user_email: '',
-        user_name: '',
-    });
+    fetchData(formData.postalcode);
+}, [formData.postalcode]);
+
     
       const handleChange = (e) => {
         const { name, value } = e.target;
@@ -28,13 +53,26 @@ const AdminForm = () => {
           ...prevData,
           [name]: value,
         }));
+      
+        
       };
+      const handlexChange = (e) => {
+        const { name, value } = e.target;
+    
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+        setSelectedPostalCode(formData.location);
+        
+      };
+    
     
       const handleSubmit = async (e) => {
         e.preventDefault();
       
         try {
-          const response = await fetch('http://127.0.0.1:3030/register', {
+          const response = await fetch('https://maali.onrender.com/register', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -68,7 +106,7 @@ const AdminForm = () => {
        
   return (
     <div className="row">
-      <div className="col-md-12"><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+      <div className="col-md-12"><br/><br/><br/><br/><br/><br/><br/><br/>
         <form action="index.html" method="post" onSubmit={handleSubmit}>
           <h1> Register user </h1>
         {/* <button onClick={handleLogout}>Logout</button> */}
@@ -132,12 +170,31 @@ const AdminForm = () => {
               value={formData.user_name}
               onChange={handleChange}
             />
-
-            
+            <label htmlFor="postalcode">Code Postal:</label>
+            <input
+              type="number"
+              id="postalcode"
+              name="postalcode"
+              value={formData.postalcode}
+              onChange={handleChange}
+            />
+            {postalCodeData.length > 0 && (
+        <label>
+          Address:
+          <select name="location" value={selectedPostalCode} onChange={handlexChange}>
+            <option value="" disabled>Address:</option>
+            {postalCodeData.map((result) => (
+              <option key={result.CodePostal} value={result.CodePostal}>
+                {result.Localité} , {result.Délégation} ,{result.Gouvernorat} 
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
             <br />
             
           </fieldset>
-
+          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
           <button onClick={handleSubmit} type="submit">Ajouter</button>
         </form>
       </div>
