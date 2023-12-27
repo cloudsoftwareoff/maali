@@ -24,7 +24,7 @@ const AdminForm = () => {
     if (code.length >= 3) {
       try {
         
-        const response = await axios.get(`https://maali.onrender.com/code/${code}`);
+        const response = await axios.get(`http://127.0.0.1:3030/code/${code}`);
         const data = response.data;
         setPostalCodeData(data);
   
@@ -72,7 +72,7 @@ const AdminForm = () => {
         e.preventDefault();
       
         try {
-          const response = await fetch('https://maali.onrender.com/register', {
+          const response = await fetch('http://127.0.0.1:3030/register', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

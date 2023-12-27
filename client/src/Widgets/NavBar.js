@@ -29,7 +29,7 @@ const Navbar = ({name}) => {
                 <span className="u-nav">Home</span>
               </span>
             </a>
-            <a href="#about" className="nav-link">
+            {/* <a href="#about" className="nav-link">
               <span className="nav-link-span">
                 <span className="u-nav">About</span>
               </span>
@@ -38,7 +38,7 @@ const Navbar = ({name}) => {
               <span className="nav-link-span">
                 <span className="u-nav">Work</span>
               </span>
-            </a>
+            </a> */}
             <a href="#contact" className="nav-link">
               <span className="nav-link-span">
                 <span className="u-nav">{name}</span>

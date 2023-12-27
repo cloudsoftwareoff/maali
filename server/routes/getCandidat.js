@@ -2,22 +2,21 @@ const express = require('express');
 const router = express.Router();
 const Candidate = require('../models/candidatModel'); // Import your candidate model
 const User = require ('../models/userModel');
+const verifyAdmin = require('../middleware/verifyAdmin'); // Import your verifyAdmin middleware
 
-// Endpoint to fetch all candidates
 router.post('/', async (req, res) => {
     const { card_number} = req.body;
     
-    const user = await User.findByCardNumber(card_number);
-  
+    if(card_number!="admin"){
+      const user = await User.findByCardNumber(card_number);
+      
       
       if (user.voted === 'yes') {
-        return res.status(403).json({ error: 'You have already voted.' });
-      }
+        return res.status(403).json({ error: '' });
+      }}
   try {
     const candidates = await Candidate.find();
-    console.log(candidates);
-    const decryptedCandidates = Candidate.decryptData(candidates);
-    res.json(candidates)
+    res.json(candidates);
 
    
   } catch (error) {

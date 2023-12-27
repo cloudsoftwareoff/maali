@@ -3,14 +3,11 @@ import './ElectionPage.css';
 import CandidateList from './CandidatList';
 
 const ElectionPage = () => {
+    
   return (
     <div className="election-page">
-
-
-      
         <CandidateList />
         
-      
     </div>
   );
 };

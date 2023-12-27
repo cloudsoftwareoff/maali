@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
     const hashedbirth = await bcrypt.hash(birth, fixedSalt);
     const hashedfingerprint = await bcrypt.hash(fingerprint, fixedSalt);
     const hashedCode = await bcrypt.hash(code, fixedSalt);
-    console.log(hashedcardNumber);
+    
     const user = await User.findOne({
       cardNumber: hashedcardNumber,
     

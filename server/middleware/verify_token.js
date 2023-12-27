@@ -10,9 +10,6 @@ const verifyToken = (req, res, next) => {
 
   const token = authHeader.split(' ')[1];
 
-  console.log('Retrieved token:', token);
- 
-
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
       console.log(err);

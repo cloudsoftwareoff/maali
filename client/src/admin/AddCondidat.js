@@ -14,7 +14,7 @@ const CandidateForm = () => {
     if (code.length == 4) {
       try {
         
-        const response = await axios.get(`https://maali.onrender.com/code/${code}`);
+        const response = await axios.get(`http://127.0.0.1:3030/code/${code}`);
         const data = response.data;
   
         // Update the state with the retrieved data
@@ -61,7 +61,7 @@ const CandidateForm = () => {
 
     try {
       // Send the candidateData to the server
-      const response = await axios.post('https://maali.onrender.com/api/add/candidat',
+      const response = await axios.post('http://127.0.0.1:3030/api/add/candidat',
      candidateData,
     {
       headers: {

@@ -1,7 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
-const Vote = require('../models/voteModel');
+const {Vote} = require('../models/voteModel');
 const User = require('../models/userModel');
 const generateId = require('../tools/random_Id');
 const { checkVotedStatus }= require('../middleware/CheckVoteState');

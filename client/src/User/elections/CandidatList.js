@@ -4,7 +4,7 @@ import './CandidateList.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const CandidateList = () => {
- //const navigate = useNavigate();
+ const navigate = useNavigate();
     const [candidates, setCandidates] = useState([]);
     const [selectedCandidate, setSelectedCandidate] = useState(null);
     const [voted, setvote] = useState("Candidate List");
@@ -15,7 +15,8 @@ const CandidateList = () => {
       const fetchCandidates = async () => {
         console.log(card_number);
         try {
-            const response = await fetch('https://maali.onrender.com/api/get/candidat', {
+            const response = await fetch('http://127.0.0.1:3030/api/get/candidat',
+            {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -45,7 +46,7 @@ const CandidateList = () => {
     const handleVote = async () => {
         if (selectedCandidate) {
           try {
-            const response = await fetch('https://maali.onrender.com/vote', {
+            const response = await fetch('http://127.0.0.1:3030/vote', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -58,6 +59,9 @@ const CandidateList = () => {
               console.log('Vote submitted successfully!');
               // Reset selected candidate after voting
               setSelectedCandidate(null);
+
+              navigate('/', { replace: true });
+              window.location.reload();
             } else {
               console.error('Failed to submit vote:', response.statusText);
             }
@@ -84,7 +88,7 @@ const CandidateList = () => {
                 src={candidate.imageUrl}
                 alt={candidate.name}
                 className="card-img-top"
-                style={{ height: '200px', objectFit: 'cover' }}
+                style={{ height: '300px', objectFit: 'cover' }}
               />
               <div className="card-body">
                 <h5 className="card-title">{candidate.position}</h5>
