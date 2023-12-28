@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './css/AdminLogin.css'; // Make sure to import your CSS file
 import { useNavigate } from 'react-router-dom';
 import HCaptcha from 'react-hcaptcha';
-
+import AppConfig from '../config';
 const AdminLogin = () => {
 
   const [isHcaptchaVerified, setIsHcaptchaVerified] = useState(false);
@@ -32,7 +32,7 @@ const AdminLogin = () => {
       return;
     }
     try {
-      const response = await fetch('http://127.0.0.1:3030/api/admin/login', {
+      const response = await fetch(`${AppConfig.serverUrl}/api/admin/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

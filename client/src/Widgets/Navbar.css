@@ -33,14 +33,15 @@
   }
   
   /* Reset */
-  button {
+  #menu {
     background: none;
     box-shadow: none;
     border: none;
     cursor: pointer;
+    width: 50px;
   }
   
-  button:focus,
+  #menu:focus,
   input:focus {
     outline: 0;
   }
@@ -143,7 +144,7 @@
   }
   
   h1.logo {
-    font-weight: 300;
+    font-weight: 100;
     font-size: 1.75em;
     line-height: 0.75em;
     color: var(--color-neutral-lt);
@@ -254,7 +255,7 @@
       padding-right: 0em;
     }
     100% {
-      padding-right: 5em;
+      padding-right: 2em;
     }
   }
   

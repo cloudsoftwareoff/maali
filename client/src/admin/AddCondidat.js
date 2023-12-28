@@ -1,8 +1,8 @@
 import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import AppConfig from '../config';
 const token = sessionStorage.getItem('admin_token');
-
 
 const CandidateForm = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const CandidateForm = () => {
     if (code.length == 4) {
       try {
         
-        const response = await axios.get(`http://127.0.0.1:3030/code/${code}`);
+        const response = await axios.get(`${AppConfig.serverUrl}/code/${code}`);
         const data = response.data;
   
         // Update the state with the retrieved data
@@ -61,7 +61,7 @@ const CandidateForm = () => {
 
     try {
       // Send the candidateData to the server
-      const response = await axios.post('http://127.0.0.1:3030/api/add/candidat',
+      const response = await axios.post(`${AppConfig.serverUrl}/api/add/candidat`,
      candidateData,
     {
       headers: {

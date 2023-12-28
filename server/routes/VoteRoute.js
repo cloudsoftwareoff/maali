@@ -10,11 +10,13 @@ router.post('/',checkVotedStatus, async (req, res) => {
   voter_session=req.headers.authorization;
   const user = await User.findByCardNumber(card_number);
   if (user) {
+    
     user.markVoted();
+    const voteId= await generateId(voter_session);
     await user.save();
     try {
         const newVote = new Vote({
-            vote_ID:voter_session,
+            vote_ID:voteId,
           
           candidate_id:selectedCandidate,
         });

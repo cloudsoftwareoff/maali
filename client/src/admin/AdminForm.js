@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './css/AdminForm.css';  
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import AppConfig from '../config';
 const token = sessionStorage.getItem('admin_token');
 const AdminForm = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const AdminForm = () => {
     if (code.length >= 3) {
       try {
         
-        const response = await axios.get(`http://127.0.0.1:3030/code/${code}`);
+        const response = await axios.get(`${AppConfig.serverUrl}/code/${code}`);
         const data = response.data;
         setPostalCodeData(data);
   
@@ -72,7 +73,7 @@ const AdminForm = () => {
         e.preventDefault();
       
         try {
-          const response = await fetch('http://127.0.0.1:3030/register', {
+          const response = await fetch(`${AppConfig.serverUrl}/register`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -96,11 +97,6 @@ const AdminForm = () => {
         // Optionally, you can still log the form data after submission
         console.log('Form Data:', formData);
       };
-      
-      const handleLogout = () => {
-        // Clear the token value from localStorage
-        localStorage.removeItem('sudo');
-      }
         
        
        

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CandidateList.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import AppConfig from '../../config';
 const CandidateList = () => {
  const navigate = useNavigate();
     const [candidates, setCandidates] = useState([]);
@@ -15,7 +15,7 @@ const CandidateList = () => {
       const fetchCandidates = async () => {
         console.log(card_number);
         try {
-            const response = await fetch('http://127.0.0.1:3030/api/get/candidat',
+            const response = await fetch(`${AppConfig.serverUrl}/api/get/candidat`,
             {
       method: 'POST',
       headers: {
@@ -46,7 +46,7 @@ const CandidateList = () => {
     const handleVote = async () => {
         if (selectedCandidate) {
           try {
-            const response = await fetch('http://127.0.0.1:3030/vote', {
+            const response = await fetch(`${AppConfig.serverUrl}/vote`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

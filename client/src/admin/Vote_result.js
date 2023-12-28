@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AppConfig from '../config';
 const VoteResult = () => {
   const [candidates, setCandidates] = useState([]);
   const [votes, setVotes] = useState([]);
@@ -7,7 +8,7 @@ const VoteResult = () => {
   // Fetch candidate data
     const fetchCandidates = async () => {
     try {
-    const response = await fetch('http://127.0.0.1:3030/api/get/candidat',
+    const response = await fetch(`${AppConfig.serverUrl}/api/get/candidat`,
     {
         method: 'POST',
         headers: {
@@ -29,7 +30,7 @@ const VoteResult = () => {
   // Fetch votes data
     const fetchVotes = async () => {
     try {
-        const response = await fetch('http://127.0.0.1:3030/allvotes', {
+        const response = await fetch(`${AppConfig.serverUrl}/allvotes`, {
         method: 'GET',
         headers: {
         'Content-Type': 'application/json',
@@ -48,7 +49,7 @@ useEffect(() => {
     fetchVotes();
 }, []);
 
-  // Calculate percentage based on votes
+  
   const calculatePercentage = (candidateId) => {
     const candidateVotes = votes.find((vote) => vote._id === candidateId)?.votes || 0;
     const totalVotes = votes.reduce((acc, vote) => acc + vote.votes, 0);
@@ -69,8 +70,8 @@ useEffect(() => {
                 />
                 <div className="card-body">
                   <h5 className="card-title">{candidate.position}</h5>
-                  <p className="card-text">{candidate.name}</p>
-                  <p className="card-text">Votes: {votes.find((vote) => vote.vote_ID === candidate.cin)?.votes || 0}</p>
+                  <b className="card-text">{candidate.name}</b>
+                  <p className="card-text">Votes: {votes.find((vote) => vote._id === candidate.cin)?.votes || 0}</p>
                   <p className="card-text">Percentage: {calculatePercentage(candidate.cin)}%</p>
                   <div className="form-check"></div>
                 </div>

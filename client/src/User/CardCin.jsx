@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 //import './CardCin.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HCaptcha from 'react-hcaptcha';
+import AppConfig from '../config';
 const CardCin = () => {
     const navigate = useNavigate();
-    const[htoken,sethtoken]=useState('');
+   
   const [formData, setFormData] = useState({
     cardNumber: '',
     birth: '',
@@ -49,7 +50,7 @@ const handleChange = (e) => {
     
     try {
       //console.log(formData);
-      const response = await fetch('http://127.0.0.1:3030/login', {
+      const response = await fetch(`${AppConfig.serverUrl}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

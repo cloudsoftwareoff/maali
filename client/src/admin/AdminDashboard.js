@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import VoteResult from './Vote_result';
-
+import AppConfig from '../config';
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState(null);
+  
 
   useEffect(() => {
     const hasSession = sessionStorage.getItem('admin_token') !== null;
@@ -14,31 +14,11 @@ const AdminDashboard = () => {
       navigate('/login');
     } else {
       
-      fetchData();
+    
     }
   }, [navigate]);
 
-  const fetchData = async () => {
-    try {
-      
-      const response = await fetch('http://127.0.0.1:3030/allvotes',
-      {
-        method:'GET',
-        headers: {
-        
-           "Content-Type": "application/json", 
-           "Authorization": `Bearer ${ sessionStorage.getItem('admin_token')}`, 
-          
-                }
-            }
-      );
-      const result = await response.json();
-      setData(result);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
+  
   const handleLogout = () => {
     sessionStorage.removeItem('admin_token');
     navigate('/login');
