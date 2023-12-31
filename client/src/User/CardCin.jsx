@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import './CardCin.css'
+import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HCaptcha from 'react-hcaptcha';
 import AppConfig from '../config';
+
 const CardCin = () => {
     const navigate = useNavigate();
-   
+    const { t } = useTranslation();
+  
   const [formData, setFormData] = useState({
     cardNumber: '',
     birth: '',
@@ -15,30 +17,24 @@ const CardCin = () => {
     hcaptchaToken :'',
   });
   const [isHcaptchaVerified, setIsHcaptchaVerified] = useState(false);
-  useEffect(() => {
-    //console.log('Updated Form Data:', formData);
-  }, [formData]);
+
 
 const handleHcaptchaVerify = (token) => {
-  //console.log('hCaptcha Token:', token);
-
   setFormData((prevData) => ({
     ...prevData,
     hcaptchaToken: String(token),
   }));
-    //console.log("verify:"+formData);
+  
   setIsHcaptchaVerified(true);
 };
 
 const handleChange = (e) => {
     const { name, value } = e.target;
-
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   
-    
   };
 
   const handleSubmit = async (event) => {
@@ -49,7 +45,7 @@ const handleChange = (e) => {
     }
     
     try {
-      //console.log(formData);
+      
       const response = await fetch(`${AppConfig.serverUrl}/login`, {
         method: 'POST',
         headers: {
@@ -60,15 +56,12 @@ const handleChange = (e) => {
     
       if (response.status === 200) {
 
-        //setUserSignedUp(true);
-        //console.log('User registered successfully');
         const { token, user_name,card_number } = await response.json();
        // console.log(token);
         sessionStorage.setItem('user_name', user_name); 
         sessionStorage.setItem('user_token', token); 
         sessionStorage.setItem('card_number', card_number); 
       
-
         navigate('/', { replace: true });
         window.location.reload();
 
@@ -84,48 +77,13 @@ const handleChange = (e) => {
     }
     //console.log('Form Data:', formData);
   };
-  const tableStyle = {
-    width: '100%',
-  };
-
-  const tdStyle = {
-    textAlign: 'center',
-    verticalAlign: 'middle',
-  };
-
-  const h2Style = {
-    width: '50%',
-  };
-
-  const imgStyle = {
-    width: '70px',
-    height: '70px', // Maintain aspect ratio
-  };
-
-  
+ 
 
   return (
-    <div className="container mt-4">
 
-      <div className="d-flex justify-content-end mb-2">
-        
-      <table style={tableStyle}>
-      <tr>
-        <td style={tdStyle}>
-          <h2 style={h2Style}>Maali VOTE</h2>
-          
-        </td>
-        <td style={tdStyle}>
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Flag_of_Tunisia_%281959%E2%80%931999%29.svg/220px-Flag_of_Tunisia_%281959%E2%80%931999%29.svg.png"
-            alt="Tunisia Flag"
-            style={imgStyle}
-          />
-        </td>
-      </tr>
-    </table>
-        
-      </div>
+    <div >
+    <div className="container mt-4">
+     
       <form>
         <div className="mb-3">
         <table>
@@ -135,7 +93,7 @@ const handleChange = (e) => {
           </td>
           <td>
 
-          <label className="form-label">Numero de carte:</label>
+          <label className="form-label">{t('userform.cardNumber')}</label>
           </td>
           </table>
           <input
@@ -152,7 +110,7 @@ const handleChange = (e) => {
         <i className="fas fa-fingerprint"></i>
         </td>
         <td>
-        <label className="form-label">Numéro d'empreinte digitale:</label>
+        <label className="form-label">{t('userform.fingerprint')}</label>
         </td>
 
           </table>
@@ -171,7 +129,7 @@ const handleChange = (e) => {
           <i className="fas fa-calendar-alt"></i>
           </td>
           <td>
-          <label className="form-label">Date de naissance:</label>
+          <label className="form-label">{t('userform.birth')}</label>
           </td>
 
           </table>
@@ -192,7 +150,7 @@ const handleChange = (e) => {
             </td>
             <td>
 
-          <label className="form-label">Code de confirmation:</label>
+          <label className="form-label"> {t('userform.code')}</label>
             </td>
           </table>
           <input
@@ -215,10 +173,12 @@ const handleChange = (e) => {
             onClick={handleSubmit}
             disabled={!isHcaptchaVerified}
           >
-            vérifier
+            {t('userform.verifyButton')}
           </button>
         </div>
+    
       </form>
+    </div>
     </div>
   );
  

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AppConfig from '../config';
 const token = sessionStorage.getItem('admin_token');
+
+
 const AdminForm = () => {
   const navigate = useNavigate();
   const [errorMessage, seterrorMessage] = useState('');
@@ -17,7 +19,8 @@ const AdminForm = () => {
     user_fingerprint: '',
     user_email: '',
     user_name: '',
-    location:'',
+    locality:'',
+    Delegation:'',
     postalcode:''
 });
 
@@ -60,14 +63,18 @@ const AdminForm = () => {
       const handlexChange = (e) => {
         const { name, value } = e.target;
     
+        setSelectedPostalCode(value);
         setFormData((prevData) => ({
           ...prevData,
-          [name]: value,
+          Delegation: value.split(',')[0],
         }));
-        setSelectedPostalCode(formData.location);
-        
+        setFormData((prevData) => ({
+          ...prevData,
+          locality: value,
+        }));
+         
+
       };
-    
     
       const handleSubmit = async (e) => {
         e.preventDefault();
@@ -102,7 +109,9 @@ const AdminForm = () => {
        
   return (
     <div className="row">
-      <div className="col-md-12"><br/><br/><br/><br/><br/><br/><br/><br/>
+      <div className="col-md-12">
+        <br/>
+
         <form action="index.html" method="post" onSubmit={handleSubmit}>
           <h1> Register user </h1>
         {/* <button onClick={handleLogout}>Logout</button> */}

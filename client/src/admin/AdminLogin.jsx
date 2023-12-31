@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import './css/AdminLogin.css'; // Make sure to import your CSS file
+import './css/AdminLogin.css'; 
 import { useNavigate } from 'react-router-dom';
 import HCaptcha from 'react-hcaptcha';
 import AppConfig from '../config';
 const AdminLogin = () => {
 
-  const [isHcaptchaVerified, setIsHcaptchaVerified] = useState(false);
+  const [isHcaptchaVerified, setIsHcaptchaVerified] = useState(true);
   const navigate = useNavigate();
   const [cin, setcin] = useState('');
   const [password, setPassword] = useState('');

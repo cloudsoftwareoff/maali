@@ -9,8 +9,8 @@ const router = express.Router();
 
   router.post('/', async (req, res) => {
   try {
-    const { user_number, user_birthdate, user_fingerprint,user_email ,user_name} = req.body;
-    console.log(user_number);
+    const { user_number, user_birthdate, user_fingerprint,user_email ,user_name,locality,Delegation,postalcode} = req.body;
+    
     // Validate incoming request
     if (!user_number || !user_birthdate || !user_fingerprint || !user_email) {
       return res.status(400).json({ error: 'All fields are required' });
@@ -25,7 +25,10 @@ const router = express.Router();
       birth: user_birthdate,
       fingerprint: user_fingerprint,
       code: CODE,
-      user_name:user_name
+      user_name:user_name,
+      Delegation:Delegation,
+      postalcode:postalcode,
+      locality:locality
     });
 
     await user.save();

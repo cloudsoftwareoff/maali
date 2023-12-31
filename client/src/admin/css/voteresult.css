@@ -1,0 +1,19 @@
+/* VoteResult.css */
+
+.medal {
+    background-color: #f8f9fa; /* Default background color for all medals */
+    border: 2px solid transparent; /* Default border for all medals */
+  }
+  
+  .gold {
+    border-color: #ffd700; /* Gold border color */
+  }
+  
+  .silver {
+    border-color: #c0c0c0; /* Silver border color */
+  }
+  
+  .bronze {
+    border-color: #cd7f32; /* Bronze border color */
+  }
+  

@@ -30,6 +30,7 @@ const CandidateForm = () => {
       imageUrl: '',
       position: '',
       location:'',
+      Delegation:'',
       postalcode:''
     });
   useEffect(() => {
@@ -53,6 +54,8 @@ const CandidateForm = () => {
   const handlexChange = (e) => {
     const { name, value } = e.target;
     setCandidateData((prevData) => ({ ...prevData, [name]: value }));
+    setCandidateData((prevData) => ({ ...prevData, Delegation: value.split(',')[0] }));
+    
     setSelectedPostalCode(value);
   };
 

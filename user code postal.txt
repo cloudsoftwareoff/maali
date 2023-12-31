@@ -1,0 +1,10 @@
+user code postal
+type election 
+hcpatcha admin
+result graph
+election time
+select candidate is a user (optinal)
+candidate can vote
+fix navbar (in mobile)
+3 language ( en , ar, fr)
+tunisia flag background

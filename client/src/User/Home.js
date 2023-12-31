@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ElectionPage from './elections/ElectionPage';
 import { useUser } from '../user'; 
@@ -8,6 +8,9 @@ const Homepage = () => {
   const navigate = useNavigate();
   const { setUser } = useUser();
   const hasSession = sessionStorage.getItem('user_token') !== null;
+
+
+    const [name,setname]=useState('');
 
 
   if (!hasSession) {
@@ -25,19 +28,10 @@ const Homepage = () => {
     <div>
       
      <Navbar name={sessionStorage.getItem('user_name')}/>
-{/* <nav>
-<b>Hello {}</b>
-      <button onClick={handleLogout}>Logout</button>
 
-</nav> */}
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+
 <main>
-
+   
       <ElectionPage/>
 </main>
 

@@ -1,0 +1,26 @@
+
+{
+    "welcome": {
+      "title": "Welcome to MaaliVote!",
+      "text": "Your Online Voting Platform. Express your voice in elections, surveys and consultations with ease. Security, privacy and real-time results. Join us in shaping the democratic future together.",
+      "login": "Login",
+      "result": "Result"
+    },
+    "util": {
+      "goback": "Go Back"
+      
+    },
+    "userform": {
+        
+        "cardNumber": "Card Number:",
+        "fingerprint": "Fingerprint Number:",
+        "birth": "Date of Birth:",
+        "code": "Confirmation Code:",
+        "verifyButton": "Verify"
+      },
+    "contact": {
+      "title": "Contact Us",
+      "content": "Get in touch with us."
+    }
+  }
+  

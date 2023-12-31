@@ -1,9 +1,7 @@
 
 const express = require('express');
-const PostalCode = require('../models/laposteModel'); // Path to your schema file
-
+const PostalCode = require('../models/laposteModel');
 const router = express.Router();
-
 
 router.get('/:codePostal', async (req, res) => {
   const codePostal = req.params.codePostal;

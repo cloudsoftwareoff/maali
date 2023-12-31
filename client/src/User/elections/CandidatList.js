@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import './CandidateList.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AppConfig from '../../config';
+
+import VoteResult from '../../admin/Vote_result';
 const CandidateList = () => {
- const navigate = useNavigate();
+    const navigate = useNavigate();
     const [candidates, setCandidates] = useState([]);
     const [selectedCandidate, setSelectedCandidate] = useState(null);
-    const [voted, setvote] = useState("Candidate List");
+    const [voted, setvote] = useState(false);
     
     const card_number=sessionStorage.getItem("card_number");
     useEffect(() => {
@@ -31,7 +33,7 @@ const CandidateList = () => {
           } else {
             if(response.status === 403){
 
-                setvote('you have already voted');
+                setvote(true);
                // console.error('Failed to fetch candidates');
             }
           }
@@ -79,6 +81,10 @@ const CandidateList = () => {
   
     return (
       <main>
+      {voted ? (
+      <VoteResult />
+    ) : (
+     
       <div className="container mt-4" style={{ background: '#f8f9fa'  }}>
         <h3 className="text-center mb-4">{voted}</h3>
         <div>
@@ -113,7 +119,9 @@ const CandidateList = () => {
           className={`btn btn-lg btn-block mt-4 ${voted === 'deja votee' ? 'btn-danger' : 'btn-success'}`}
           onClick={handleVote}
           disabled={!selectedCandidate}>Vote</button>
-      </div></main>
+      </div>
+    )}
+      </main>
     );
     
   };

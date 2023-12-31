@@ -1,0 +1,24 @@
+
+{
+    "welcome": {
+      "title": "Bienvenue sur MaaliVote!",
+      "text": "Votre Plateforme de Vote en Ligne. Exprimez votre voix dans des élections, sondages et consultations en toute simplicité. Sécurité, confidentialité et résultats en temps réel. Rejoignez-nous pour façonner l'avenir démocratique ensemble.",
+      "login": "Se connecter",
+      "result": "Résultat"
+    },
+    "util": {
+        "goback": "Retour"
+      },
+      "userform": {
+        "cardNumber": "Numéro de carte :",
+        "fingerprint": "Numéro d'empreinte digitale :",
+        "birth": "Date de naissance :",
+        "code": "Code de confirmation :",
+        "verifyButton": "Vérifier"
+      },
+    "contact": {
+      "title": "Contact Us",
+      "content": "Get in touch with us."
+    }
+  }
+  

@@ -29,6 +29,10 @@ const candidateSchema = new mongoose.Schema({
   postalcode:{
     type: String,
     required: true,
+  },
+  Delegation:{
+    type: String,
+    required: true,
   }
 });
 

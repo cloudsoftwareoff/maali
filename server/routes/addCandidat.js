@@ -5,7 +5,7 @@ const Candidate = require('../models/candidatModel');
 router.post('/', async (req, res) => {
   try {
     // Request body
-    const { cinNumber, name, imageUrl, position, postalcode, location } = req.body;
+    const { cinNumber, name, imageUrl, position, postalcode, location,Delegation } = req.body;
 
     // Create a new Candidate instance
     const newCandidate = new Candidate({
@@ -14,7 +14,8 @@ router.post('/', async (req, res) => {
       imageUrl: imageUrl,
       position: position,
       location: location,
-      postalcode: postalcode
+      postalcode: postalcode,
+      Delegation:Delegation
     });
 
     await newCandidate.save();

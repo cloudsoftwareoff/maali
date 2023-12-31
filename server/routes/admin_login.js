@@ -7,16 +7,17 @@ const fixedSalt = process.env.SALT;
 
 router.post('/', async (req, res) => {
   const { cin, password } = req.body;
-
+  console.log("cin:"+cin);
   try {
     const hashedcin = await bcrypt.hash(cin, fixedSalt);
     const hashedpassword = await bcrypt.hash(password, fixedSalt);
-
+    console.log("cin:"+hashedcin);
     const admin = await AdminUser.findOne({
       cin: hashedcin,
       password: hashedpassword
     });
-    console.log(hashedcin);
+   
+    
 
     if (!admin) {
       return res.status(401).json({ error: 'Invalid credentials' });

@@ -24,6 +24,18 @@ const userSchema = new mongoose.Schema({
     type:String,
     required:true,
   },
+  locality:{
+    type:String,
+    required:true,
+  },
+  Delegation:{
+    type:String,
+    required:true,
+  },
+  postalcode:{
+    type:String,
+    required:true,
+  },
   voted:{
     type:String,
     default:"no"

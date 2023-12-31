@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useUser } from './user';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Homepage from './User/Home';
 import AdminLogin from './admin/AdminLogin';
 import AdminForm from './admin/AdminForm';
@@ -9,6 +9,7 @@ import CardCin from './User/CardCin'
 import { useAdmin } from './admin/AdminProvider';
 import CandidateForm from './admin/AddCondidat';
 import AdminDashboard from './admin/AdminDashboard';
+import WelcomeScreen from './Widgets/WelcomeScreen';
 
 const NotFound = () => (
   <div>
@@ -40,7 +41,7 @@ const App = () => {
         {user ? (
           <Route path="/" element={<Homepage />} />
         ) : (
-          <Route path="/" element={<CardCin />} />
+          <Route path="/" element={<WelcomeScreen />} />
         )}
 
         <Route path="/login" element={<AdminLogin />} />
