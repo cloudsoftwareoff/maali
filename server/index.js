@@ -1,6 +1,6 @@
 // Importation des modules nécessaires
 const express = require('express');
-const rateLimit = require('express-rate-limit');
+
 const cors = require('cors');
 const path = require('path');
 const dotenv = require('dotenv');
@@ -21,6 +21,7 @@ const AdminRoute = require('./routes/AdminRoute');
 const CandidatRoute = require('./routes/CandidateRoute');
 const MakeVote = require('./routes/VoteRoute');
 const ElectionRoute = require('./routes/electionRoute');
+const serverStatsMiddleware = require('./middleware/stats');
 
 // Initialisation d'une instance d'Express
 const app = express();
@@ -29,22 +30,18 @@ const port = process.env.PORT || 8080;
 // Activation du support CORS (Cross-Origin Resource Sharing)
 app.use(cors());
 
-//  limiter middleware
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, 
-  message: 'Too many requests from this IP, please try again later.',
-});
-
-// anti DDos
-app.use(limiter);
 
 // Configuration de la gestion des requêtes JSON et des cookies
 app.use(express.json());
 app.use(cookieParser());
-
+app.use(serverStatsMiddleware);
 // Définition des routes
+// Route to get server stats
+app.get('/', (req, res) => {
+  res.json(req.serverStats);
+});
 app.use('/code', postalCodeRoute);
+//user route
 app.use('/u', UserAuth);
 app.use('/api/admin', AdminRoute);
 app.use('/api/candidate', CandidatRoute);
