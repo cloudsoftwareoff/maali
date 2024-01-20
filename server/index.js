@@ -8,7 +8,11 @@ const dotenv = require('dotenv');
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 const connection = require('./db'); // Connexion à la base de données
 
+// Initialisation d'une instance d'Express
+const app = express();
+const port = process.env.PORT || 8080;
 const cookieParser = require('cookie-parser');
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -27,9 +31,6 @@ const MakeVote = require('./routes/VoteRoute');
 const ElectionRoute = require('./routes/electionRoute');
 const serverStatsMiddleware = require('./middleware/stats');
 
-// Initialisation d'une instance d'Express
-const app = express();
-const port = process.env.PORT || 8080;
 
 // Activation du support CORS (Cross-Origin Resource Sharing)
 app.use(cors());
