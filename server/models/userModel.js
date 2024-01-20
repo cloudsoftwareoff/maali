@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const {encrypt} = require('../tools/cryptoUtils');
+const {encrypt,decrypt} = require('../tools/cryptoUtils');
 const fixedSalt = process.env.SALT;
 const userSchema = new mongoose.Schema({
   cardNumber:  {
@@ -42,6 +42,16 @@ const userSchema = new mongoose.Schema({
   }
 });
 
+userSchema.statics.decryptData = function (users) {
+  return users.map(user => {
+  
+    return {
+      cardNumber:user.cardNumber,
+      postalcode:user.postalcode,
+      user_name: decrypt(user.user_name),
+    };
+  });
+};
 userSchema.pre('save', async function (next) {
   const user = this;
 

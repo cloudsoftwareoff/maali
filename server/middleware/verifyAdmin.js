@@ -18,12 +18,17 @@ const VerifyAdminToken = (req, res, next) => {
       return res.status(401).json({ message: 'Unauthorized: Invalid token' });
     }
 
-    console.log('Decoded JWT:', decoded);
+  
 
     // Check if the decoded JWT contains 'cin' and 'password'
     if (decoded && decoded.cin && decoded.password) {
       req.user = decoded;
+      
+      
       next();
+
+
+      
     } else {
       return res.status(401).json({ message: 'Unauthorized: Invalid token contents' });
     }

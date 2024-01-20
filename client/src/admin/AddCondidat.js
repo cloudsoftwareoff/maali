@@ -6,12 +6,19 @@ const token = sessionStorage.getItem('admin_token');
 
 const CandidateForm = () => {
   const navigate = useNavigate();
+
+  // const [elections, setElections] = useState([]);
+  const [selectedElection, setSelectedElection] = useState(null);
+
+
   const [postalCode, setPostalCode] = useState('');
   const [errorMessage, seterrorMessage] = useState('');
   const [postalCodeData, setPostalCodeData] = useState([]);
   const [selectedPostalCode, setSelectedPostalCode] = useState('');
+  
+
   const fetchData = async (code) => {
-    if (code.length == 4) {
+    if (code.length === 4) {
       try {
         
         const response = await axios.get(`${AppConfig.serverUrl}/code/${code}`);
@@ -26,6 +33,7 @@ const CandidateForm = () => {
   };
     const [candidateData, setCandidateData] = useState({
       cinNumber: '',
+      electionId:'',
       name: '',
       imageUrl: '',
       position: '',
@@ -33,23 +41,53 @@ const CandidateForm = () => {
       Delegation:'',
       postalcode:''
     });
+
+  
   useEffect(() => {
 
-    const hasSession = sessionStorage.getItem('admin_token') !== null;
+  const hasSession = sessionStorage.getItem('admin_token') !== null;
   
+  axios.get(`${AppConfig.serverUrl}/election/ongoing`)
+  .then(response => {
+    const lastElection = response.data.lastElection;
+    setSelectedElection(lastElection);
+
+    setCandidateData((prevData) => ({
+      ...prevData,
+      electionId: lastElection.id
+    }));
+  })
+  .catch(error => console.error(error));
+
   
-    if (!hasSession) {
+  if (!hasSession) {
       navigate('/login');
     }
     fetchData(candidateData.postalcode);
 
-}, [candidateData.postalcode]);
+}, [candidateData.postalcode,navigate]);
 
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
     setCandidateData((prevData) => ({ ...prevData, [name]: value }));
+    if (name === "cinNumber" && value.length === 8) {
+      try {
+        const response = await axios.get(`${AppConfig.serverUrl}/u/${value}`);
+        const userData = response.data;
   
+        // Update the form fields with the retrieved user data
+        setCandidateData((prevData) => ({
+          ...prevData,
+          name: userData.user_name || "",
+          postalcode: userData.postalcode || "",
+          location:userData.locality,
+          Delegation:userData.Delegation
+        }));
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    }
   };
   const handlexChange = (e) => {
     const { name, value } = e.target;
@@ -58,19 +96,26 @@ const CandidateForm = () => {
     
     setSelectedPostalCode(value);
   };
+  // const handleSelectChange = (event) => {
+  //   const selectedId = event.target.value;
+  //   const selected = elections.find(election => election._id === selectedId);
+  //   setSelectedElection(selected);
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setCandidateData((prevData) =>
+      ({ ...prevData, electionId: selectedElection.id}));
+                
     try {
       // Send the candidateData to the server
-      const response = await axios.post(`${AppConfig.serverUrl}/api/add/candidat`,
-     candidateData,
+      const response = await axios.post(`${AppConfig.serverUrl}/api/candidate/add`,
+      candidateData,
     {
       headers: {
       
-         "Content-Type": "application/json", 
-         "Authorization": `Bearer ${token}`, 
+        "Content-Type": "application/json", 
+        "Authorization": `Bearer ${token}`, 
         
               }
           }
@@ -101,6 +146,42 @@ const CandidateForm = () => {
     <form onSubmit={handleSubmit}>
 
 <div>
+
+<div>
+    
+    
+      
+      {selectedElection && (
+        <label>
+        Election Name:
+          <input
+          maxLength={4}
+            type="text"
+            name="electionName"
+            value={selectedElection.name}
+          
+          disabled/>
+        </label>
+        // <div>
+        //   <h2>Selected Election Details:</h2>
+        //   <p>ID: {selectedElection.id}</p>
+        //   <p>Name: {selectedElection.name}</p>
+        //   <p>Start Time: {new Date(selectedElection.startTime).toLocaleString()}</p>
+        //   <p>End Time: {new Date(selectedElection.endTime).toLocaleString()}</p>
+        //   <p>Type: {selectedElection.electionType}</p>
+        // </div>
+      )}
+    </div>
+    <label>
+        Cin Number:
+        <input type="number" name="cinNumber" value={candidateData.cinNumber} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        Name:
+        <input type="text" name="name" value={candidateData.name} onChange={handleChange} />
+      </label>
+      
       <label>
         Postal Code:
         <input
@@ -116,7 +197,7 @@ const CandidateForm = () => {
       {postalCodeData.length > 0 && (
         <label>
           Address:
-          <select name="location" value={selectedPostalCode} onChange={handlexChange}>
+          <select name="location" value={candidateData.location || selectedPostalCode} onChange={handlexChange}>
             <option value="" disabled>Address:</option>
             {postalCodeData.map((result) => (
               <option key={result.CodePostal} value={result.CodePostal}>
@@ -128,17 +209,9 @@ const CandidateForm = () => {
       )}
     </div>
 
-      <label>
-        Cin Number:
-        <input type="text" name="cinNumber" value={candidateData.cinNumber} onChange={handleChange} />
-      </label>
-      <br />
+    
 
-      <label>
-        Name:
-        <input type="text" name="name" value={candidateData.name} onChange={handleChange} />
-      </label>
-      <br />
+      
 
       <label>
         Image URL:
@@ -148,7 +221,7 @@ const CandidateForm = () => {
 
       <label>
         Position:
-        <input type="text" name="position" value={candidateData.position} onChange={handleChange} />
+        <input type="number" name="position" value={candidateData.position} onChange={handleChange} />
       </label>
       <br />
 

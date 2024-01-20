@@ -3,15 +3,16 @@ const router = express.Router();
 const ElectionModel = require('../models/electionModel');
 const VerifyAdminToken = require('../middleware/verifyAdmin');
 
-// Route to add election data
-router.get('/', VerifyAdminToken,async (req, res) => {
+const Candidate = require('../models/candidatModel');
+const generateRandomId = require('../tools/randomId');
+// Route election data
+router.post('/', VerifyAdminToken,async (req, res) => {
   try {
     const {name, startTime, endTime, electionType } = req.body;
 
-    // Validate
-
     // Create a new election instance
     const newElection = new ElectionModel({
+      id:  generateRandomId(11),
         name,
         startTime,
         endTime,
@@ -30,8 +31,8 @@ router.get('/', VerifyAdminToken,async (req, res) => {
 
 router.get('/active', async (req, res) => {
   try {
-    const election = await ElectionModel.findOne();
-
+    const elections = await ElectionModel.find().sort({ endTime: -1 });
+    election=elections[0];
     if (!election) {
       return res.json({ active: false });
     }
@@ -58,15 +59,16 @@ router.get('/active', async (req, res) => {
 router.get('/time', async (req, res) => {
     try {
       
-      const election = await ElectionModel.findOne();
-  
-      if (!election) {
+      const elections = await ElectionModel.find().sort({ endTime: -1 });
+
+      const lastElection = elections[0];
+      if (!lastElection) {
         return res.status(404).json({ error: 'Election not found' });
       }
   
       // Calculate remaining time
       const currentTime = new Date();
-      const endTime = new Date(election.endTime);
+      const endTime = new Date(lastElection.endTime);
       const remainingTime = endTime - currentTime;
   
       // Return the remaining time in milliseconds
@@ -76,4 +78,36 @@ router.get('/time', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+//ongoing-and-future
+router.get('/ongoing', async (req, res) => {
+  try {
+    const elections = await ElectionModel.find().sort({ endTime: -1 });
+
+    if (elections.length === 0) {
+      return res.json({ error: 'No elections found' });
+    }
+
+    const lastElection = elections[0];
+    res.json({lastElection});
+  } catch (error) {
+    console.error('Error fetching ongoing and future elections:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+router.get('/r', async (req, res) => {
+  const { electionId } = req.params;
+  const elections = await ElectionModel.find().sort({ endTime: -1 });
+
+      const lastElection = elections[0].id;
+  try {
+    const votes = await Candidate.calculateVotesByArea(lastElection,elections[0].electionType);
+  
+    res.json({ votes });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+
+    
+  }
+});
+
 module.exports = router;

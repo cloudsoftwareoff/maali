@@ -19,12 +19,12 @@ const ElectionForm = () => {
     const checkActiveElection = async () => {
       try {
         const response = await axios.get(`${AppConfig.serverUrl}/election/active`,
-         {
+        {
           
             headers: {
             
-               "Content-Type": "application/json", 
-               "Authorization": `Bearer ${token}`, 
+              "Content-Type": "application/json", 
+              "Authorization": `Bearer ${token}`, 
               
                     }
                 }
@@ -55,7 +55,7 @@ const ElectionForm = () => {
 
     try {
       const response = await axios.post(
-        `${AppConfig.serverUrl}/election`,
+        `${AppConfig.serverUrl}/election/`,
         formData,
         {
           headers: {
@@ -94,7 +94,7 @@ const ElectionForm = () => {
           <input
             type="text"
             name="name"
-            value={formData.electionType}
+            value={formData.name}
             onChange={handleChange}
             required
           />

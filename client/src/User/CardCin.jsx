@@ -16,7 +16,8 @@ const CardCin = () => {
     code: '',
     hcaptchaToken :'',
   });
-  const [isHcaptchaVerified, setIsHcaptchaVerified] = useState(false);
+  // TODO change it to false in prod
+  const [isHcaptchaVerified, setIsHcaptchaVerified] = useState(true);
 
 
 const handleHcaptchaVerify = (token) => {
@@ -46,7 +47,7 @@ const handleChange = (e) => {
     
     try {
       
-      const response = await fetch(`${AppConfig.serverUrl}/login`, {
+      const response = await fetch(`${AppConfig.serverUrl}/u/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,9 +58,11 @@ const handleChange = (e) => {
       if (response.status === 200) {
 
         const { token, user_name,card_number } = await response.json();
-       // console.log(token);
+      
         sessionStorage.setItem('user_name', user_name); 
+        
         sessionStorage.setItem('user_token', token); 
+
         sessionStorage.setItem('card_number', card_number); 
       
         navigate('/', { replace: true });

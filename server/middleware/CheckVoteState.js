@@ -4,26 +4,12 @@ const checkVotedStatus = async (req, res, next) => {
     try {
      
         const {   card_number } = req.body;
-        console.log("card" +card_number);
+       
       const user = await User.findByCardNumber(card_number);
-      User.findByCardNumber(card_number)
-  .then(user => {
-    if (user) {
-      console.log('User found:', user);
-    } else {
-      console.log('User not found');
-    }
-  })
-  .catch(error => {
-    console.error('Error finding user by card number:', error);
-  });
-  
-      
+      User.findByCardNumber(card_number);
       if (user.voted === 'yes') {
         return res.status(403).json({ error: 'You have already voted.' });
       }
-  
-      
       next();
     } catch (error) {
       console.error('Error checking voted status:', error);

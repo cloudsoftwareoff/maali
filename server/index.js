@@ -1,46 +1,57 @@
+// Importation des modules nécessaires
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '.env') });
-// db 
-const connection = require("./db");
+const dotenv = require('dotenv');
+// Configuration du fichier .env
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+const connection = require('./db'); // Connexion à la base de données
+
+const cookieParser = require('cookie-parser');
+
+
+// Connexion à la base de données
 connection();
 
-const { checkVotedStatus }= require('./middleware/CheckVoteState');
-const cookieParser = require('cookie-parser');
-// Routes
-const verifyHcaptcha = require('./middleware/verifyHcaptcha');
-const AllVotes= require('./routes/allvotes');
+// Importation des routes
 const postalCodeRoute = require('./routes/laposteRoute');
-const loginRouter = require('./routes/userLogin');
-const registerRouter = require('./routes/register');
-const adminLogin = require('./routes/admin_login');
-const AddCandidat = require('./routes/addCandidat');
+const UserAuth = require('./routes/UserAuth');
+const AdminRoute = require('./routes/AdminRoute');
+const CandidatRoute = require('./routes/CandidateRoute');
 const MakeVote = require('./routes/VoteRoute');
-const GetCandidat = require('./routes/getCandidat');
-const verifyToken = require('./middleware/verify_token');
-const verifyAdminToken = require('./middleware/verifyAdmin');
-const AddElection = require('./routes/electionRoute');
+const ElectionRoute = require('./routes/electionRoute');
+
+// Initialisation d'une instance d'Express
 const app = express();
 const port = process.env.PORT || 8080;
+
+// Activation du support CORS (Cross-Origin Resource Sharing)
 app.use(cors());
+
+//  limiter middleware
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, 
+  message: 'Too many requests from this IP, please try again later.',
+});
+
+// anti DDos
+app.use(limiter);
+
+// Configuration de la gestion des requêtes JSON et des cookies
 app.use(express.json());
 app.use(cookieParser());
 
-
-
-
-//path
-
+// Définition des routes
 app.use('/code', postalCodeRoute);
-app.use('/login',verifyHcaptcha,loginRouter);
-app.use('/register',verifyAdminToken,registerRouter);
-app.use('/api/admin/login',adminLogin);
-app.use('/api/add/candidat',verifyAdminToken,AddCandidat);
-app.use('/api/get/candidat',GetCandidat);
-app.use('/vote',verifyToken,MakeVote);
-app.use('/election',AddElection);
-app.use('/allvotes',AllVotes);
+app.use('/u', UserAuth);
+app.use('/api/admin', AdminRoute);
+app.use('/api/candidate', CandidatRoute);
+app.use('/vote', MakeVote);
+app.use('/election', ElectionRoute);
+
+// Lancement du serveur sur le port spécifié
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Le serveur écoute sur le port ${port}`);
 });

@@ -13,7 +13,7 @@ import WelcomeScreen from './Widgets/WelcomeScreen';
 
 const NotFound = () => (
   <div>
-    <h1>404 - Not Found</h1>
+    <h1>404 - Not Found 😄</h1>
     <p>The page you are looking for does not exist.</p>
   </div>
 );
@@ -45,8 +45,6 @@ const App = () => {
         )}
 
         <Route path="/login" element={<AdminLogin />} />
-        <Route path="/adduser" element={<AdminForm />} />
-        <Route path="/addcandidate" element={<CandidateForm />} />
         <Route path="/admin" element={<AdminDashboard />} />
 
         <Route path="*" element={<NotFound />} />

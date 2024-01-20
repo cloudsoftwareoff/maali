@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/:codePostal', async (req, res) => {
   const codePostal = req.params.codePostal;
-console.log(codePostal);
+
   try {
     // Find the postal code data based on the provided codePostal
     const postalCodeData = await PostalCode.find({ 'Code Postal': codePostal });

@@ -80,7 +80,7 @@ const AdminForm = () => {
         e.preventDefault();
       
         try {
-          const response = await fetch(`${AppConfig.serverUrl}/register`, {
+          const response = await fetch(`${AppConfig.serverUrl}/u/register`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -105,9 +105,10 @@ const AdminForm = () => {
         console.log('Form Data:', formData);
       };
         
-       
-       
+      
+      
   return (
+    //jsx
     <div className="row">
       <div className="col-md-12">
         <br/>

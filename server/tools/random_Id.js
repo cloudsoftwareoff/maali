@@ -10,7 +10,7 @@ async function generateId(userId) {
     return hashedCode;
   } catch (error) {
     console.error('Error generating id:', error);
-   return userId;
+  return userId;
   }
 }
 

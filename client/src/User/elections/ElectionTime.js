@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ProgressBar } from 'react-bootstrap';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import AppConfig from '../../config';
@@ -41,15 +41,13 @@ const ElectionTimer = () => {
   const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
-  // Calculate progress percentage for the progress bar
-  const progressPercentage = ((remainingTime / (24 * 60 * 60 * 1000)) * 100).toFixed(2);
-
+  
   return (
     <div>
       <h3 className="text-center">Remaining Time</h3>
       <div className="text-center">
-        <h4>{hours}h {minutes}m {seconds}s</h4>
-        <ProgressBar animated now={progressPercentage} label={`${progressPercentage}%`} />
+        <h4>{hours}h {minutes}m </h4>
+        
       </div>
     </div>
   );

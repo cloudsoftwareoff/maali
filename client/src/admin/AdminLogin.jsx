@@ -9,11 +9,14 @@ const AdminLogin = () => {
   const navigate = useNavigate();
   const [cin, setcin] = useState('');
   const [password, setPassword] = useState('');
+  const [hcaptchaToken,sethcaptchaToken]=useState('');
+
   const [error, setError] = useState('');
 
+  
   const handleHcaptchaVerify = (token) => {
 
-    console.log('hCaptcha Token:', token);
+    sethcaptchaToken(token);
   
     setIsHcaptchaVerified(true);
   }
@@ -27,8 +30,10 @@ const AdminLogin = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+   
     if (!isHcaptchaVerified) {
-      alert('Please complete hCaptcha verification.');
+      
+    alert('Please complete hCaptcha verification.');
       return;
     }
     try {
@@ -37,10 +42,10 @@ const AdminLogin = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ cin, password }),
+        body: JSON.stringify({ cin, password ,hcaptchaToken}),
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         const { token } = await response.json();
         console.log('Admin logged in successfully!');
         sessionStorage.setItem('admin_token', token); 
@@ -59,61 +64,38 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="align">
-      <h3>Admin </h3>
-      <div className="grid">
-        <form
-          action="https://httpbin.org/post"
-          method="POST"
-          className="form login"
-          onSubmit={handleSubmit}
-        >
-          <div className="form__field">
-            <label htmlFor="login__cin">
-            <i className="fas fa-id-card-alt"></i>  <span className="hidden">CIN  :</span>
-            </label>
-            <input
-              id="login__cin"
-              type="text"
-              name="cin"
-              className="form__input"
-              placeholder="cin"
-              required
-              value={cin}
-              onChange={handlecinChange}
-            />
+    <div className="add-admin-form-container">
+    <h3 className="form-title"> Admin Login</h3>
+    
+    <form className="admin-form" onSubmit={handleSubmit}>
+      
+      <div className="form-group">
+          <label>CIN</label>
+            
+          <input type="text" className="form-control" placeholder="Enter CIN" value={cin} onChange={handlecinChange} />
+  
           </div>
 
-          <div className="form__field">
-          <i className="fas fa-key"></i> <label htmlFor="login__password">
-              <span className="hidden">Password:</span>
-            </label>
-            <input
-              id="login__password"
-              type="password"
-              name="password"
-              className="form__input"
-              placeholder="Password"
-              required
-              value={password}
-              onChange={handlePasswordChange}
-            />
+          <div className="form-group">
+          <label>Password</label>
+          <input type="password" className="form-control" placeholder="Enter Password" value={password} onChange={handlePasswordChange} />
+     
           </div>
           <HCaptcha
             sitekey="3442d3a6-59fe-4543-bb39-a557d3d517d6"
             onVerify={handleHcaptchaVerify}
           />
           <div className="form__field">
-            <input type="submit" 
-            value="Sign In" 
+            <button type="submit"  className="btn btn-primary"
+            
             disabled={!isHcaptchaVerified}
-            />
+            >Sign In</button>
           </div>
 
-          {error && <p className="error-message">{error}</p>}
+          {error && <p>{error}</p>}
         </form>
       </div>
-    </div>
+    
   );
 };
 
