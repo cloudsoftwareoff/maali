@@ -2,17 +2,22 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const ejs = require('ejs');
 const dotenv = require('dotenv');
 // Configuration du fichier .env
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 const connection = require('./db'); // Connexion à la base de données
 
 const cookieParser = require('cookie-parser');
-
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 // Connexion à la base de données
 connection();
-
+const convertBytesToMB = (bytes) => {
+  return (bytes / (1024 * 1024)).toFixed(2);
+};
+app.locals.convertBytesToMB = convertBytesToMB;
 // Importation des routes
 const postalCodeRoute = require('./routes/laposteRoute');
 const UserAuth = require('./routes/UserAuth');
@@ -37,8 +42,9 @@ app.use(serverStatsMiddleware);
 // Définition des routes
 // Route to get server stats
 app.get('/', (req, res) => {
-  res.json(req.serverStats);
+  res.render('index', { serverStats: req.serverStats });
 });
+
 app.use('/code', postalCodeRoute);
 //user route
 app.use('/u', UserAuth);

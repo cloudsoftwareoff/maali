@@ -1,0 +1,17 @@
+<!-- views/index.ejs -->
+<html>
+  <head>
+    <title>Server Stats</title>
+  </head>
+  <body>
+    <h1>Server Stats</h1>
+    <p>Start Time: <%= serverStats.startTime %></p>
+    <p>Uptime: <%= serverStats.uptime %> seconds</p>
+    <p>Hostname: <%= serverStats.hostname %></p>
+    <p>Total Memory: <%= convertBytesToMB(serverStats.memory.total) %> MB</p>
+    <p>Free Memory: <%= convertBytesToMB(serverStats.memory.free) %> MB</p>
+    <h2>Daily Stats</h2>
+    <p>Requests Today: <%= serverStats.daily.requests %></p>
+    <p>Visits Today: <%= serverStats.daily.visits %></p>
+  </body>
+</html>
