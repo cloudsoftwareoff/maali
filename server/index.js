@@ -1,6 +1,5 @@
 // Importation des modules nécessaires
 const express = require('express');
-const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const path = require('path');
 const dotenv = require('dotenv');
@@ -29,15 +28,6 @@ const port = process.env.PORT || 8080;
 // Activation du support CORS (Cross-Origin Resource Sharing)
 app.use(cors());
 
-//  limiter middleware
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, 
-  message: 'Too many requests from this IP, please try again later.',
-});
-
-// anti DDos
-app.use(limiter);
 
 // Configuration de la gestion des requêtes JSON et des cookies
 app.use(express.json());
