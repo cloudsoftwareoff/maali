@@ -38,7 +38,7 @@ router.post('/get', async (req, res) => {
 
             res.json(candidates);
         } else {
-            res.json('Aucune élection en cours pour le moment.');
+            res.status(401).json('Aucune élection en cours pour le moment.');
         }
     } catch (error) {
         console.error('Erreur lors de la récupération des candidats :', error);

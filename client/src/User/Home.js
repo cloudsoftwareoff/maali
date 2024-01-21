@@ -11,7 +11,7 @@ const Homepage = () => {
   const hasSession = sessionStorage.getItem('user_token') !== null;
 
   if (!hasSession) {
-    navigate('/');
+    navigate('/auth');
   } 
   console.log("sesson"+sessionStorage.getItem('user_token'));
   
