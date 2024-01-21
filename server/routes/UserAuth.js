@@ -57,7 +57,7 @@ const router = express.Router();
 // Connexion utlisateur
 router.post('/login' ,verifyHcaptcha,async (req, res) => {
     const { cardNumber, birth, fingerprint, code } = req.body;
-   
+  
     try {
       const hashedcardNumber = await bcrypt.hash(cardNumber, fixedSalt);
       const hashedbirth = await bcrypt.hash(birth, fixedSalt);

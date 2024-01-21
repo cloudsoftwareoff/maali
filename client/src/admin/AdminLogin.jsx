@@ -54,7 +54,7 @@ const AdminLogin = () => {
         navigate('/admin', { replace: true });
         window.location.reload();
       } else {
-        setError('Invalid cin or password');
+        setError('Invalid cin or password or captcha');
         
       }
     } catch (error) {
