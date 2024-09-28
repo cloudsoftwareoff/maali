@@ -86,7 +86,7 @@ const handleChange = (e) => {
 
     <div >
     <div className="container mt-4">
-     
+   
       <form>
         <div className="mb-3">
         <table>
@@ -101,7 +101,7 @@ const handleChange = (e) => {
           </table>
           <input
             maxLength={8}
-            type="number"
+            type="number|password"
             className="form-control"
             name="cardNumber"
             onChange={handleChange}
@@ -120,7 +120,7 @@ const handleChange = (e) => {
 
           <input
             maxLength={8}
-            type="number"
+            type="password"
             className="form-control"
             name="fingerprint"
             onChange={handleChange}
@@ -158,7 +158,7 @@ const handleChange = (e) => {
           </table>
           <input
             maxLength={6}
-            type="number"
+            type="password"
             className="form-control"
             name="code"
             onChange={handleChange}
